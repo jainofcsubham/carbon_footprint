@@ -4,3 +4,13 @@
     box-sizing: border-box;
     /* background-color: #FBF9EF; */
 }
+
+body,html{
+    height: 100%;
+}
+
+#root{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
