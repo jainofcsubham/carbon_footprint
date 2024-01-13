@@ -1,4 +1,3 @@
-import React from "react";
 import "./Features.css";
 import cube from "../../assets/cube.png";
 
