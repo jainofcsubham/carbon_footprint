@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Header } from "../../components/header/Header";
 import "./Dashboard.css";
 import { Category } from "../../components/category/Category";
@@ -161,30 +161,30 @@ export const Dashboard = () => {
   const [currentCategoryDetails, setCurrentCategoryDetails] =
     useState<number>(0);
 
-  const setAnswerToQuestion = ({
-    questionIndex,
-    answer,
-  }: {
-    questionIndex: number;
-    answer: number;
-  }) => {
-    setQuestions(
-      questions.map((category, index) => {
-        if (index == currentCategoryDetails) {
-          return {
-            ...category,
-            questions: category.questions.map((question, qIndex) => {
-              if (qIndex == questionIndex) {
-                return { ...question, answer };
-              }
-              return { ...question };
-            }),
-          };
-        }
-        return category;
-      })
-    );
-  };
+  // const setAnswerToQuestion = ({
+  //   questionIndex,
+  //   answer,
+  // }: {
+  //   questionIndex: number;
+  //   answer: number;
+  // }) => {
+  //   setQuestions(
+  //     questions.map((category, index) => {
+  //       if (index == currentCategoryDetails) {
+  //         return {
+  //           ...category,
+  //           questions: category.questions.map((question, qIndex) => {
+  //             if (qIndex == questionIndex) {
+  //               return { ...question, answer };
+  //             }
+  //             return { ...question };
+  //           }),
+  //         };
+  //       }
+  //       return category;
+  //     })
+  //   );
+  // };
 
   const onNext = () => {
     setCurrentCategoryDetails(currentCategoryDetails + 1);
