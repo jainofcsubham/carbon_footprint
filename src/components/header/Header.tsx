@@ -20,11 +20,11 @@ export const Header = () => {
           <div className='header_wrapper'>
               <div className='logo'>CARBONCALC</div>
               <div className='nav_bar'>
-                  <div className='nav_item'>About</div>
+                  {/* <div className='nav_item'>About</div>
                   <div className='nav_item'>Calculator</div>
                   <div className='nav_item'>Methodology</div>
                   <div className='nav_item'>FAQ</div>
-                  <div className='nav_item'>Contact</div>
+                  <div className='nav_item'>Contact</div> */}
               </div>
               <div className='action_bar'>
                   <div className='action_item' onClick={goToLogin}>Login</div>
