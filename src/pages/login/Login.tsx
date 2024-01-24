@@ -26,44 +26,44 @@ export const Login = () => {
 
   const handleLogin = () => {
     // Add your login logic here
-    if(credentials.password && credentials.username){
-        nav("/dashboard");
+    if (credentials.password && credentials.username) {
+      nav("/dashboard");
     }
   };
   return (
     <>
-      <Header />
-        
+      <div className="page_wrapper">
+        <Header />
         <div className="login_container">
-            <div className="login-form">
-                <div className="form-group">
-                <label htmlFor="username">Username:</label>
-                <input
-                    type="text"
-                    id="username"
-                    name="username"
-                    value={credentials.username}
-                    onChange={handleInputChange}
-                    required
-                />
-                </div>
-                <div className="form-group">
-                <label htmlFor="password">Password:</label>
-                <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    value={credentials.password}
-                    onChange={handleInputChange}
-                    required
-                />
-                </div>
-                <div className="form-group">
-                <button onClick={handleLogin}>Login</button>
-                </div>
+          <div className="login-form">
+            <div className="form-group">
+              <label htmlFor="username">Username:</label>
+              <input
+                type="text"
+                id="username"
+                name="username"
+                value={credentials.username}
+                onChange={handleInputChange}
+                required
+              />
             </div>
+            <div className="form-group">
+              <label htmlFor="password">Password:</label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                value={credentials.password}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
+            <div className="form-group">
+              <button onClick={handleLogin}>Login</button>
+            </div>
+          </div>
         </div>
-
+      </div>
     </>
   );
 };

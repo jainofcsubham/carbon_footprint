@@ -66,18 +66,17 @@ export const Category = (props: CategoryProps) => {
   return (
     <>
       <div className=" question_wrapper">
-        <div className="category_heading"> {localCategory.category}</div>
         {localCategory.questions.map((question, index) => {
           return (
             <React.Fragment key={index}>
               <div className="question_box">
-                <div className="question">{question.question}</div>
-                <div className="answer">
+                <div className="question_box">{question.question}</div>
+                <div className="input_box">
                   {question.type == "input" ? (
                     <input
                       className="number_input"
-                      type="  "
-                      value={question.answer}
+                      type="text"
+                      value={ question.answer > 0 ? question.answer : ''}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                         onNumberChange(Number(e.target.value), index)
                       }

@@ -14,11 +14,14 @@ export const Header = () => {
     navigate("/register");
   }
 
+  const goToHome = () => {
+    navigate("/");
+  }
   return (
     <>
         <div className='header_container'>
           <div className='header_wrapper'>
-              <div className='logo'>CARBONCALC</div>
+              <div className='logo' onClick={goToHome}>CARBONCALC</div>
               <div className='nav_bar'>
                   {/* <div className='nav_item'>About</div>
                   <div className='nav_item'>Calculator</div>
