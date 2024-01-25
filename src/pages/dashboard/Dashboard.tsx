@@ -47,13 +47,13 @@ const staticQuestions: Array<Category> = [
     category: "Fuel Consumption",
     questions: [
       {
-        question: "Enter the amount of petrol consumption(kg)",
+        question: "Enter the amount of petrol consumption(litre)",
         type: "input",
         answer: 0,
         factor: 2.34,
       },
       {
-        question: "Enter the amount of diesel consumption(kg)",
+        question: "Enter the amount of diesel consumption(litre)",
         type: "input",
         answer: 0,
         factor: 2.71,

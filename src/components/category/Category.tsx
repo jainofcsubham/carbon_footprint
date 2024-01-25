@@ -76,7 +76,7 @@ export const Category = (props: CategoryProps) => {
                     <input
                       className="number_input"
                       type="text"
-                      value={ question.answer > 0 ? question.answer : ''}
+                      value={question.answer}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                         onNumberChange(Number(e.target.value), index)
                       }
