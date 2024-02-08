@@ -248,8 +248,6 @@ export const Calculator = () => {
 
   return (
     <>
-      <div className="page_wrapper">
-        {/* <Header /> */}
         {!finalAnswer.isCalculationDone ? (
           <>
             <div className="question_container">
@@ -309,7 +307,6 @@ export const Calculator = () => {
             </div>
           </>
         )}
-      </div>
     </>
   );
 };

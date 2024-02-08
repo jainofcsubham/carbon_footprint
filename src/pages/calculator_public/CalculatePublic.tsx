@@ -4,8 +4,10 @@ import { Calculator } from "../calculator/Calculator";
 export const CalculatePublic = () => {
   return (
     <>
-      <Header />
-      <Calculator />
+      <div className="page_wrapper">
+        <Header />
+        <Calculator />
+      </div>
     </>
   );
 };

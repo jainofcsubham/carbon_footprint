@@ -63,7 +63,7 @@ export const Register = () => {
             <div className="register_logo" onClick={goToHome}>CARBONCALC</div>
             <div className="register_box">
               <div className="register_title">Register</div>
-              <div className="form_container">
+              <div className="register_form_container">
               <div className="form_row">
                 <div className="form-group">
                   <label htmlFor="first_name">First Name</label>
