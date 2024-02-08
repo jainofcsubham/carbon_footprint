@@ -1,5 +1,4 @@
 .faq_container{
-    background-color: #C7B090;
     width: 100%;
 }
 
@@ -25,4 +24,7 @@
 
 .answer{
     margin: 16px 0;
+}
+.faq_left_block{
+    margin-right: 60px;
 }

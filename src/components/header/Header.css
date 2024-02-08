@@ -56,3 +56,13 @@
 .action_item_register:hover{
     background-color: #727D6B;
 }
+
+.header_profile_pic{
+    width: 40px;
+    margin-left: 20px;
+}
+
+.profile{
+    display: flex;
+    align-items: center;
+}
