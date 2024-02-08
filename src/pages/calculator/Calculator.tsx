@@ -1,10 +1,7 @@
 import { useState } from "react";
 import { Header } from "../../components/header/Header";
-import "./Dashboard.css";
+import "./Calculator.css";
 import { Category } from "../../components/category/Category";
-import {  Route, Routes } from 'react-router-dom';
-import { Home } from "../home/Home";
-import { Calculator } from "../calculator/Calculator";
 
 interface Question {
   question: string;
@@ -25,8 +22,8 @@ interface Category {
 
 const staticQuestions: Array<Category> = [
   {
-    category: "",
-    questions: [
+    category : "",
+    questions:[
       {
         question: "Please choose period of calculation",
         answer: -1,
@@ -42,10 +39,9 @@ const staticQuestions: Array<Category> = [
             label: "Monthly",
             value: 1,
             factor: 0,
-          },
-        ],
-      },
-    ],
+          },]
+      }
+    ]
   },
   {
     category: "Fuel Consumption",
@@ -175,7 +171,7 @@ const staticQuestions: Array<Category> = [
   },
 ];
 
-export const Dashboard = () => {
+export const Calculator = () => {
   const [questions, setQuestions] = useState<Array<Category>>(staticQuestions);
 
   const [finalAnswer, setFinalAnswer] = useState<{
@@ -210,12 +206,12 @@ export const Dashboard = () => {
       category.questions.forEach((each) => {
         if (each.type == "input") {
           ans = ans + each.answer * each.factor;
-        } else if (each.type == "radio" && category.category == "Food Habits") {
+        }else if (each.type == "radio" && category.category == "Food Habits") {
           if (each.options && each.options.length) {
             let dividingFactor = questions[0].questions[0].answer == 0 ? 1 : 12;
             each.options.forEach((option) => {
               if (option.value == each.answer) {
-                ans = ans + option.factor / dividingFactor;
+                ans = ans + (option.factor/dividingFactor);
               }
             });
           }
@@ -253,15 +249,8 @@ export const Dashboard = () => {
   return (
     <>
       <div className="page_wrapper">
-        <Header isLoggedIn />
-
-        <Routes>
-          <Route path="/calculator" element={<Calculator />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/groups" element={<Calculator />} />
-        </Routes>
-
-        {/* {!finalAnswer.isCalculationDone ? (
+        {/* <Header /> */}
+        {!finalAnswer.isCalculationDone ? (
           <>
             <div className="question_container">
               <div className="category_title">
@@ -275,17 +264,9 @@ export const Dashboard = () => {
               </div>
               <div className="question_footer">
                 <div className="footer_disclaimer">
-                  {currentCategoryDetails != 0 ? (
-                    <>
-                      **Please enter details based on{" "}
-                      {questions[0].questions[0].answer == 0
-                        ? "yearly"
-                        : "monthly"}{" "}
-                      consumption.**
-                    </>
-                  ) : (
-                    <></>
-                  )}
+                  {
+                    currentCategoryDetails != 0 ? <>**Please enter details based on {questions[0].questions[0].answer == 0 ? "yearly" : "monthly"} consumption.**</> : <></>
+                  }
                 </div>
                 <div className="action_item_container">
                   {currentCategoryDetails != 0 ? (
@@ -316,14 +297,7 @@ export const Dashboard = () => {
         ) : (
           <>
             <div className="calculation_container">
-              <div className="title_box">
-                {" "}
-                Your estimated{" "}
-                {questions[0].questions[0].answer == 0
-                  ? "yearly"
-                  : "monthly"}{" "}
-                carbon footprint
-              </div>
+              <div className="title_box"> Your estimated {questions[0].questions[0].answer == 0 ? "yearly" : "monthly"} carbon footprint</div>
               <div className="emission_box">
                 {" "}
                 {finalAnswer.answer.toFixed(2)}{" "}
@@ -331,12 +305,10 @@ export const Dashboard = () => {
               <div className="footer_title_box">
                 Total CO<sub>2</sub> emission in Kgs
               </div>
-              <button className="re_calculate_button" onClick={reCalculate}>
-                Re-calculate
-              </button>
+              <button className="re_calculate_button" onClick={reCalculate}>Re-calculate</button>
             </div>
           </>
-        )} */}
+        )}
       </div>
     </>
   );

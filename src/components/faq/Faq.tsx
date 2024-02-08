@@ -8,7 +8,7 @@ export const Faq = () => {
         <div className="faq_left_block">
           <div className="section_name">FAQ</div>
           <h2 className="section_heading">Common Questions</h2>
-          <div>Here are some of the most common questions that we get.</div>
+          {/* <div>Here are some of the most common questions that we get.</div> */}
         </div>
         <div className="faq_right_block">
           <div className="question_block">

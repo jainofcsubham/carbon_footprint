@@ -6,7 +6,7 @@ export const Hero = () => {
   const navigate = useNavigate()
 
   const goToCalculator = () => {
-    navigate("/dashboard")
+    navigate("/calculator")
   }
 
   return (
