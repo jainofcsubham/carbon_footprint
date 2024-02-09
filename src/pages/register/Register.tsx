@@ -1,10 +1,11 @@
 import { useState } from "react";
 import "./Register.css";
 import { useNavigate } from "react-router-dom";
+import { useAxios } from "../../components/useAxios";
 
 interface Credentials {
-  first_name : string
-  last_name : string
+  first_name: string;
+  last_name: string;
   email: string;
   password: string;
   gender: string;
@@ -12,9 +13,11 @@ interface Credentials {
 }
 
 export const Register = () => {
+  const { doCall } = useAxios();
+
   const [credentials, setCredentials] = useState<Credentials>({
-    first_name : "",
-    last_name : "",
+    first_name: "",
+    last_name: "",
     email: "",
     password: "",
     gender: "",
@@ -38,119 +41,134 @@ export const Register = () => {
       [name]: value,
     }));
   };
-  const handleRegister = () => {
-    // Add your login logic here
-    console.log(credentials);
-    // if (credentials.password && credentials.email) {
-    //   nav("/dashboard/home");
-    // }
+  const handleRegister = async () => {
+    if (
+      credentials.email ||
+      credentials.date_of_birth ||
+      credentials.first_name ||
+      credentials.gender ||
+      credentials.last_name ||
+      credentials.password
+    ) {
+      const res = await doCall({
+        url: "/register",
+        method: "POST",
+        data: {
+          ...credentials,
+        },
+      });
+      if(res.data && res.data.status == 200){
+        nav("/login")
+      }
+
+    } else {
+      alert("Please fill in all the details");
+    }
   };
 
-  const handleLogin= () =>{
-    nav("/login")
-  }
-
+  const handleLogin = () => {
+    nav("/login");
+  };
 
   const goToHome = () => {
-    nav("/")
-  }
+    nav("/");
+  };
 
   return (
     <>
       <div className="page_wrapper">
         <div className="register_container">
           <div className="register-form">
-            <div className="register_logo" onClick={goToHome}>CARBONCALC</div>
+            <div className="register_logo" onClick={goToHome}>
+              CARBONCALC
+            </div>
             <div className="register_box">
               <div className="register_title">Register</div>
               <div className="register_form_container">
-              <div className="form_row">
-                <div className="form-group">
-                  <label htmlFor="first_name">First Name</label>
-                  <input
-                    type="text"
-                    id="first_name"
-                    name="first_name"
-                    value={credentials.first_name}
-                    onChange={handleInputChange}
-                    required
-                  />
+                <div className="form_row">
+                  <div className="form-group">
+                    <label htmlFor="first_name">First Name</label>
+                    <input
+                      type="text"
+                      id="first_name"
+                      name="first_name"
+                      value={credentials.first_name}
+                      onChange={handleInputChange}
+                      required
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="last_name">Last Name</label>
+                    <input
+                      type="last_name"
+                      id="last_name"
+                      name="last_name"
+                      value={credentials.last_name}
+                      onChange={handleInputChange}
+                      required
+                    />
+                  </div>
                 </div>
-                <div className="form-group">
-                  <label htmlFor="last_name">Last Name</label>
-                  <input
-                    type="last_name"
-                    id="last_name"
-                    name="last_name"
-                    value={credentials.last_name}
-                    onChange={handleInputChange}
-                    required
-                  />
+                <div className="form_row">
+                  <div className="form-group">
+                    <label htmlFor="email">Email</label>
+                    <input
+                      type="text"
+                      id="email"
+                      name="email"
+                      value={credentials.email}
+                      onChange={handleInputChange}
+                      required
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="password">Password</label>
+                    <input
+                      type="password"
+                      id="password"
+                      name="password"
+                      value={credentials.password}
+                      onChange={handleInputChange}
+                      required
+                    />
+                  </div>
                 </div>
-              </div>
-              <div className="form_row">
-              <div className="form-group">
-                  <label htmlFor="email">Email</label>
-                  <input
-                    type="text"
-                    id="email"
-                    name="email"
-                    value={credentials.email}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="password">Password</label>
-                  <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    value={credentials.password}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </div>
-              </div>
-              <div className="form_row">
-              <div className="form-group">
-                  <label htmlFor="date_of_birth">DOB</label>
-                  <input
-                    type="date"
-                    id="date_of_birth"
-                    name="date_of_birth"
-                    value={credentials.date_of_birth}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </div>
-              <div className="form-group">
-                  <label htmlFor="gender">Gender</label>
-                  <select
-                    id="gender"
-                    name="gender"
-                    value={credentials.gender}
-                    onChange={handleSelectChange}
-                    required
-                  >
-                    <option value="">Select an option</option>
-                    <option value="Female">Female</option>
-                    <option value="Male">Male</option>
-                    <option value="Other">Other</option>
+                <div className="form_row">
+                  <div className="form-group">
+                    <label htmlFor="date_of_birth">DOB</label>
+                    <input
+                      type="date"
+                      id="date_of_birth"
+                      name="date_of_birth"
+                      value={credentials.date_of_birth}
+                      onChange={handleInputChange}
+                      required
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="gender">Gender</label>
+                    <select
+                      id="gender"
+                      name="gender"
+                      value={credentials.gender}
+                      onChange={handleSelectChange}
+                      required
+                    >
+                      <option value="">Select an option</option>
+                      <option value="Female">Female</option>
+                      <option value="Male">Male</option>
+                      <option value="Other">Other</option>
                     </select>
+                  </div>
                 </div>
-               
+
+                <div className="form-group">
+                  <button onClick={handleRegister}>Register</button>
+                </div>
               </div>
 
-              <div className="form-group">
-                <button onClick={handleRegister}>Register</button>
-              </div>
-              </div>
-              
               <div className="register_already_account">
-                <div
-                  className="register_already_account_title"
-                >
+                <div className="register_already_account_title">
                   Already have an account?
                 </div>
                 <div

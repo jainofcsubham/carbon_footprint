@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./Login.css";
 import { useNavigate } from "react-router-dom";
+import { useAxios } from "../../components/useAxios";
 
 interface Credentials {
   username: string;
@@ -13,6 +14,7 @@ export const Login = () => {
     password: "",
   });
 
+  const {doCall} = useAxios()
   const nav = useNavigate();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -23,10 +25,27 @@ export const Login = () => {
     }));
   };
 
-  const handleLogin = () => {
-    // Add your login logic here
-    if (credentials.password && credentials.username) {
-      nav("/dashboard/home");
+  const handleLogin =async () => {
+
+    if (
+      credentials.username ||
+      credentials.password
+    ) {
+      const res = await doCall({
+        url: "/login",
+        method: "POST",
+        data: {
+          password : credentials.password,
+          email : credentials.username,
+        },
+      });
+      if(res.data && res.data.status == 200){
+        console.log(res.data.status)
+        nav("/dashboard/calculator")
+      }
+
+    } else {
+      alert("Please fill in all the details");
     }
   };
 
