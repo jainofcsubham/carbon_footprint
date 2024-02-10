@@ -15,7 +15,16 @@
 }
 
 .form-group {
-  margin-bottom: 20px;
+  margin-bottom: 30px;
+  position: relative;
+
+}
+
+.register_error_msg{
+  position: absolute;
+  font-size: 12px;
+  top: 105%;
+  color: rgb(171 25 25);
 }
 
 .form-group label {

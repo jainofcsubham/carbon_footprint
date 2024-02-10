@@ -1,105 +1,124 @@
-import { useState } from "react";
 import "./Login.css";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useAxios } from "../../components/useAxios";
-
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 interface Credentials {
   username: string;
   password: string;
 }
+const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+
+const schema = yup
+  .object({
+    username: yup
+      .string()
+      .matches(emailRegex, "Invalid username.")
+      .required("Username is required"),
+    password: yup
+      .string()
+      .required("Password is required")
+      .min(8, "Password must be at least 8 characters")
+      .matches(/[a-z]/, "Password must contain at least one lowercase letter")
+      .matches(/[A-Z]/, "Password must contain at least one uppercase letter")
+      .matches(/[0-9]/, "Password must contain at least one digit")
+      .matches(
+        /[!@#$%^&*(),.?":{}|<>]/,
+        "Password must contain at least one special character"
+      ),
+  })
+  .required();
 
 export const Login = () => {
-  const [credentials, setCredentials] = useState<Credentials>({
-    username: "",
-    password: "",
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<Credentials>({
+    resolver: yupResolver(schema),
   });
 
-  const {doCall} = useAxios()
+  const { doCall } = useAxios();
   const nav = useNavigate();
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setCredentials((prevCredentials) => ({
-      ...prevCredentials,
-      [name]: value,
-    }));
-  };
-
-  const handleLogin =async () => {
-
-    if (
-      credentials.username ||
-      credentials.password
-    ) {
-      const res = await doCall({
-        url: "/login",
-        method: "POST",
-        data: {
-          password : credentials.password,
-          email : credentials.username,
-        },
-      });
-      if(res.data && res.data.status == 200){
-        console.log(res.data.status)
-        nav("/dashboard/calculator")
-      }
-
+  const handleLogin: SubmitHandler<Credentials> = async (data) => {
+    const res = await doCall({
+      url: "/login",
+      method: "POST",
+      data: {
+        password: data.password,
+        email: data.username,
+      },
+    });
+    if (res.data && res.data.status == 200) {
+      nav("/dashboard/calculator");
     } else {
-      alert("Please fill in all the details");
+      alert("Something went wrong!! Please try again.");
     }
   };
 
-  const handleRegisterNow = () =>{
-    nav("/register")
-  }
+  const handleRegisterNow = () => {
+    nav("/register");
+  };
 
-  const handleForgotPass = () =>{
-    nav("/forgot-password")
-  }
+  const handleForgotPass = () => {
+    nav("/forgot-password");
+  };
 
   const goToHome = () => {
-    nav("/")
-  }
+    nav("/");
+  };
 
   return (
     <>
       <div className="page_wrapper">
         <div className="login_container">
           <div className="login-form">
-            <div className="login_logo" onClick={goToHome}>CARBONCALC</div>
+            <div className="login_logo" onClick={goToHome}>
+              CARBONCALC
+            </div>
             <div className="login_box">
               <div className="login_title">Login</div>
               <div className="login_register_title">
-                <div className="login_no_account">Don't have an account yet?</div>
-                <div onClick={handleRegisterNow} className="login_register_cta">Register Now</div>
+                <div className="login_no_account">
+                  Don't have an account yet?
+                </div>
+                <div onClick={handleRegisterNow} className="login_register_cta">
+                  Register Now
+                </div>
               </div>
-              <div className="form-group">
-                <label htmlFor="username">Username</label>
-                <input
-                  type="text"
-                  id="username"
-                  name="username"
-                  value={credentials.username}
-                  onChange={handleInputChange}
-                  required
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="password">Password</label>
-                <input
-                  type="password"
-                  id="password"
-                  name="password"
-                  value={credentials.password}
-                  onChange={handleInputChange}
-                  required
-                />
-              </div>
-              <div className="form-group">
-                <button onClick={handleLogin}>Login</button>
-              </div>
+
+              <form onSubmit={handleSubmit(handleLogin)}>
+                <div className="form-group">
+                  <label htmlFor="username">Username</label>
+                  <input {...register("username")} />
+                  {errors.username && errors.username.message && (
+                    <div className="login_error_msg">
+                      {errors.username.message}
+                    </div>
+                  )}
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="password">Password</label>
+                  <input type="password" {...register("password")} />
+                  {errors.password && errors.password.message && (
+                    <div className="login_error_msg">
+                      {errors.password.message}
+                    </div>
+                  )}
+                </div>
+
+                <div className="form-group">
+                  <button type="submit">Login</button>
+                </div>
+              </form>
+
               <div className="login_forgot_pass_container">
-                <div onClick={handleForgotPass} className="login_forgot_pass">Forgot your password?</div>
+                <div onClick={handleForgotPass} className="login_forgot_pass">
+                  Forgot your password?
+                </div>
               </div>
             </div>
           </div>
