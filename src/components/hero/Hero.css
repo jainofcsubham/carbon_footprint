@@ -29,6 +29,7 @@
     border-radius: 48px;
     padding: 8px 16px;
     color: white;
+    font-size: 14px;
 }
 
 .get_started:hover{

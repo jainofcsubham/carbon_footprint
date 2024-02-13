@@ -9,13 +9,18 @@ export const Hero = () => {
     navigate("/calculator")
   }
 
+  const goToFaq = () => {
+    document.getElementById('faq_section')?.scrollIntoView({behavior: 'smooth'});  
+  }
+
+
   return (
     <>
       <div className="hero_container">
         <h1 className="hero_text">Calculate Your Carbon Footprint</h1>
         <div className="hero_action">
-          <div className="hero_action_item get_started" onClick={goToCalculator}>Get Started</div>
-          <div className="hero_action_item ">Learn More</div>
+          <div className="hero_action_item get_started" onClick={goToCalculator}>TRY OUT CALCULATOR </div>
+          <div className="hero_action_item" onClick={goToFaq}>FAQ</div>
         </div>
       </div>
     </>
