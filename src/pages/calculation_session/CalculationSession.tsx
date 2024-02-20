@@ -3,7 +3,7 @@ import "./CalculationSession.css";
 import { useNavigate } from "react-router-dom";
 
 export const CalculationSession = () => {
-  const [sessionList, setSessionList] = useState<Array<any>>([]);
+  const [sessionList, _setSessionList] = useState<Array<any>>([]);
   const navigate = useNavigate();
 
   useEffect(() => {

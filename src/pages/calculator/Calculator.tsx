@@ -327,7 +327,7 @@ export const Calculator = ({ askToSave = false }: ICalculatorProps) => {
               Total CO<sub>2</sub> emission in Kgs
             </div>
             <div className="calculator_footer_action_item">
-              {finalAnswer.answer > 0 ? (
+              {finalAnswer.answer > 0 && askToSave ? (
                 <button className="save_session_button" onClick={onSaveSession}>
                   Save Calculation
                 </button>
