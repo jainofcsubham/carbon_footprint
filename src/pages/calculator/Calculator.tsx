@@ -19,10 +19,14 @@ interface Category {
   questions: Array<Question>;
 }
 
+interface ICalculatorProps {
+  askToSave?: boolean;
+}
+
 const staticQuestions: Array<Category> = [
   {
-    category : "",
-    questions:[
+    category: "",
+    questions: [
       {
         question: "Please choose period of calculation",
         answer: -1,
@@ -38,9 +42,10 @@ const staticQuestions: Array<Category> = [
             label: "Monthly",
             value: 1,
             factor: 0,
-          },]
-      }
-    ]
+          },
+        ],
+      },
+    ],
   },
   {
     category: "Fuel Consumption",
@@ -170,7 +175,7 @@ const staticQuestions: Array<Category> = [
   },
 ];
 
-export const Calculator = () => {
+export const Calculator = ({ askToSave = false }: ICalculatorProps) => {
   const [questions, setQuestions] = useState<Array<Category>>(staticQuestions);
 
   const [finalAnswer, setFinalAnswer] = useState<{
@@ -205,12 +210,12 @@ export const Calculator = () => {
       category.questions.forEach((each) => {
         if (each.type == "input") {
           ans = ans + each.answer * each.factor;
-        }else if (each.type == "radio" && category.category == "Food Habits") {
+        } else if (each.type == "radio" && category.category == "Food Habits") {
           if (each.options && each.options.length) {
             let dividingFactor = questions[0].questions[0].answer == 0 ? 1 : 12;
             each.options.forEach((option) => {
               if (option.value == each.answer) {
-                ans = ans + (option.factor/dividingFactor);
+                ans = ans + option.factor / dividingFactor;
               }
             });
           }
@@ -245,67 +250,97 @@ export const Calculator = () => {
     });
   };
 
+  const onSaveSession = () => {
+    // do Call
+  };
+
   return (
     <>
-        {!finalAnswer.isCalculationDone ? (
-          <>
-            <div className="question_container">
-              <div className="category_title">
-                {questions[currentCategoryDetails].category}
+      {!finalAnswer.isCalculationDone ? (
+        <>
+          <div className="question_container max_width">
+            <div className="category_title">
+              {questions[currentCategoryDetails].category}
+            </div>
+            <div className="form_container">
+              <Category
+                category={questions[currentCategoryDetails]}
+                setCategoryAnswers={setCategoryAnswers}
+              />
+            </div>
+            <div className="question_footer">
+              <div className="footer_disclaimer">
+                {currentCategoryDetails != 0 ? (
+                  <>
+                    **Please enter details based on{" "}
+                    {questions[0].questions[0].answer == 0
+                      ? "yearly"
+                      : "monthly"}{" "}
+                    consumption.**
+                  </>
+                ) : (
+                  <></>
+                )}
               </div>
-              <div className="form_container">
-                <Category
-                  category={questions[currentCategoryDetails]}
-                  setCategoryAnswers={setCategoryAnswers}
-                />
-              </div>
-              <div className="question_footer">
-                <div className="footer_disclaimer">
-                  {
-                    currentCategoryDetails != 0 ? <>**Please enter details based on {questions[0].questions[0].answer == 0 ? "yearly" : "monthly"} consumption.**</> : <></>
-                  }
-                </div>
-                <div className="action_item_container">
-                  {currentCategoryDetails != 0 ? (
-                    <button className="back_button" onClick={onBack}>
-                      Back
-                    </button>
-                  ) : (
-                    <></>
-                  )}
+              <div className="action_item_container">
+                {currentCategoryDetails != 0 ? (
+                  <button className="back_button" onClick={onBack}>
+                    Back
+                  </button>
+                ) : (
+                  <></>
+                )}
 
-                  {currentCategoryDetails < questions.length - 1 ? (
-                    <>
-                      <button className="submit_button" onClick={onNext}>
-                        Next
-                      </button>
-                    </>
-                  ) : (
-                    <>
-                      <button className="submit_button" onClick={onSubmit}>
-                        Submit
-                      </button>
-                    </>
-                  )}
-                </div>
+                {currentCategoryDetails < questions.length - 1 ? (
+                  <>
+                    <button className="submit_button" onClick={onNext}>
+                      Next
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <button className="submit_button" onClick={onSubmit}>
+                      Submit
+                    </button>
+                  </>
+                )}
               </div>
             </div>
-          </>
-        ) : (
-          <>
-            <div className="calculation_container">
-              <div className="title_box"> Your estimated {questions[0].questions[0].answer == 0 ? "yearly" : "monthly"} carbon footprint</div>
-              <div className="emission_box">
-                {" "}
-                {finalAnswer.answer.toFixed(2)}{" "}
-              </div>
-              <div className="footer_title_box">
-                Total CO<sub>2</sub> emission in Kgs
-              </div>
-              <button className="re_calculate_button" onClick={reCalculate}>Re-calculate</button>
+          </div>
+        </>
+      ) : (
+        <>
+          <div className="calculation_container">
+            <div className="title_box">
+              {" "}
+              Your estimated{" "}
+              {questions[0].questions[0].answer == 0
+                ? "yearly"
+                : "monthly"}{" "}
+              carbon footprint
             </div>
-          </>
-        )}
+            <div className="emission_box">
+              {" "}
+              {finalAnswer.answer.toFixed(2)}{" "}
+            </div>
+            <div className="footer_title_box">
+              Total CO<sub>2</sub> emission in Kgs
+            </div>
+            <div className="calculator_footer_action_item">
+              {finalAnswer.answer > 0 ? (
+                <button className="save_session_button" onClick={onSaveSession}>
+                  Save Calculation
+                </button>
+              ) : (
+                <></>
+              )}
+              <button className="re_calculate_button" onClick={reCalculate}>
+                Re-calculate
+              </button>
+            </div>
+          </div>
+        </>
+      )}
     </>
   );
 };

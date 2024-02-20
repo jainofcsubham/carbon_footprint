@@ -4,6 +4,7 @@ import { useAxios } from "../../components/useAxios";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useForm, SubmitHandler } from "react-hook-form";
+import moment from "moment";
 
 interface Credentials {
   email: string;
@@ -58,10 +59,17 @@ export const Register = () => {
   const nav = useNavigate();
 
   const handleRegister: SubmitHandler<Credentials> = async (data) => {
+    console.log({
+      ...data,
+      date_of_birth : moment(data.date_of_birth).format("YYYY-MM-DD")
+    })
     const res = await doCall({
       url: "/register",
       method: "POST",
-      data,
+      data : {
+        ...data,
+        date_of_birth : moment(data.date_of_birth).format("YYYY-MM-DD")
+      },
     });
     if (res.data && res.data.status == 200) {
       nav("/login");

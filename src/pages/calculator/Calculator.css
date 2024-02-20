@@ -82,10 +82,10 @@
     display: flex;
 }
 
-.re_calculate_button{
-    max-width: 150px;
+.re_calculate_button,.save_session_button{
+    min-width: 150px;
+    max-width: 200px;
     width: 100%;
-
     background-color: #35452B;
     border-radius: 48px;
     padding: 8px 16px;
@@ -94,9 +94,15 @@
     justify-content: center;
     cursor: pointer;
     border: 1px solid #35452B;
+    margin: 0 10px;
 }
 
-.re_calculate_button:hover{
+.re_calculate_button:hover,.save_session_button:hover{
     background-color: #727D6B;
+    border: 1px solid #727D6B;
+}
+
+.calculator_footer_action_item{
+    display: flex;
 }
 
