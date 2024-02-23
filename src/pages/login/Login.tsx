@@ -52,6 +52,8 @@ export const Login = () => {
       },
     });
     if (res.data && res.data.status == 200) {
+      const idToken:any = res.data && res.data.idToken ? res.data.idToken : ''
+      localStorage.setItem('idToken',idToken)
       nav("/dashboard/calculator");
     } else {
       alert("Something went wrong!! Please try again.");

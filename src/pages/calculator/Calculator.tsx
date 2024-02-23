@@ -1,11 +1,12 @@
 import { useState } from "react";
 import "./Calculator.css";
 import { Category } from "../../components/category/Category";
+import moment from "moment";
 
 interface Question {
   question: string;
-  answer: number;
-  type: "input" | "radio";
+  answer: number | Date | null;
+  type: "input" | "radio" | "date";
   options?: Array<{
     label: string;
     value: number;
@@ -25,25 +26,19 @@ interface ICalculatorProps {
 
 const staticQuestions: Array<Category> = [
   {
-    category: "",
+    category: "Estimation Period",
     questions: [
       {
-        question: "Please choose period of calculation",
-        answer: -1,
-        type: "radio",
+        question: "Please choose start date of Estimation period",
+        type: "date",
         factor: 0,
-        options: [
-          {
-            label: "Yearly",
-            value: 0,
-            factor: 0,
-          },
-          {
-            label: "Monthly",
-            value: 1,
-            factor: 0,
-          },
-        ],
+        answer : null
+      },
+      {
+        question: "Please choose end date of Estimation period",
+        type: "date",
+        factor: 0,
+        answer : null
       },
     ],
   },
@@ -209,13 +204,13 @@ export const Calculator = ({ askToSave = false }: ICalculatorProps) => {
     questions.forEach((category) => {
       category.questions.forEach((each) => {
         if (each.type == "input") {
-          ans = ans + each.answer * each.factor;
+          ans = ans + Number(each.answer) * each.factor;
         } else if (each.type == "radio" && category.category == "Food Habits") {
           if (each.options && each.options.length) {
-            let dividingFactor = questions[0].questions[0].answer == 0 ? 1 : 12;
+            const daysCount = moment(questions[0].questions[1].answer).diff(moment(questions[0].questions[0].answer),'days');
             each.options.forEach((option) => {
               if (option.value == each.answer) {
-                ans = ans + option.factor / dividingFactor;
+                ans = ans + (option.factor * daysCount/ 365);
               }
             });
           }

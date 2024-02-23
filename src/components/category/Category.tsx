@@ -1,10 +1,11 @@
 import React, { useCallback, useEffect, useState } from "react";
 import "./Category.css";
+import moment from "moment";
 
 interface Question {
   question: string;
-  answer: number;
-  type: "input" | "radio";
+  answer: number | Date | null;
+  type: "input" | "radio" | "date";
   factor: number;
   options?: Array<{
     label: string;
@@ -40,6 +41,40 @@ export const Category = (props: CategoryProps) => {
     });
   };
 
+  // const onDateChange = (value : Date,qIndex : number) => {
+
+  //   let newCategory :Category= {
+  //     ...localCategory,
+  //     questions : localCategory.questions.map((each,index) => {
+  //       if(index == qIndex) return {...each,answer:value}
+  //       return {...each}
+  //     })
+  //   }
+
+  //   setLocalCategory((categoryVar) => {
+  //     return {
+  //       ...categoryVar,
+  //       questions: categoryVar.questions.map((each, index) => {
+  //         if (index == qIndex) return { ...each, answer: value };
+  //         return { ...each };
+  //       }),
+  //     };
+  //   });
+  // }
+
+  const onDateChange = useCallback((value:Date,qIndex:number) => {
+    let newCategory :Category= {
+      ...localCategory,
+      questions : localCategory.questions.map((each,index) => {
+        if(index == qIndex) return {...each,answer:value}
+        return {...each}
+      })
+    }
+
+    setLocalCategory(newCategory)
+    setCategoryAnswers(newCategory)
+  },[localCategory])
+
   const onTabChange = () => {
     setCategoryAnswers(localCategory);
   };
@@ -71,18 +106,31 @@ export const Category = (props: CategoryProps) => {
             <React.Fragment key={index}>
               <div className="question_box">
                 <div className="question_box">{question.question}</div>
-                <div className="input_box">
-                  {question.type == "input" ? (
+                <div className="input_box"> 
+                  {question.type == "input"  && (
                     <input
                       className="number_input"
                       type="text"
-                      value={question.answer}
+                      value={String(question.answer)}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                         onNumberChange(Number(e.target.value), index)
                       }
                       onBlur={onTabChange}
                     />
-                  ) : (
+                  ) }
+                  {
+                    question.type == 'date' &&  (
+                      <input
+                      className="number_input"
+                      type="date"
+                      value={moment(question.answer).format("yyyy-MM-DD")}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                        onDateChange(new Date(e.target.value), index)
+                      }
+                    />
+                    )
+                  }
+                  { question.type == 'radio'  && (
                     <>
                       {question.options &&
                         question.options.map((option, oIndex) => {
