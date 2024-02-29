@@ -36,3 +36,9 @@
 .calculation_session_add_button:hover{
     background-color: #727D6B;
 }
+
+.calculation_session_header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
