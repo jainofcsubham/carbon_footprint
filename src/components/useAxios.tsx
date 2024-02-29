@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig } from "axios";
 
-const baseUrl = import.meta.env.VITE_BASE_URL;
+const baseUrl = import.meta.env.VITE_BASE_URL ? import.meta.env.VITE_BASE_URL : "https://2bikh722cf.execute-api.ap-south-1.amazonaws.com/dev";
 
 export const useAxios = () => {
   const doCall = async (
