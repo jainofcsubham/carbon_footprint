@@ -51,8 +51,8 @@ export const Login = () => {
         email: data.username,
       },
     });
-    if (res.data && res.data.status == 200) {
-      const idToken:any = res.data && res.data.idToken ? res.data.idToken : ''
+    if (res.res && res.res.status == "success") {
+      const idToken:any = res.res && res.res.idToken ? res.res.idToken : ''
       localStorage.setItem('idToken',idToken)
       nav("/dashboard/calculator");
     } else {
@@ -72,8 +72,11 @@ export const Login = () => {
     nav("/");
   };
 
+  const a = import.meta.env.VITE_TEMP
+
   return (
     <>
+    {a}
       <div className="page_wrapper">
         <div className="login_container">
           <div className="login-form">

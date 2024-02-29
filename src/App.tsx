@@ -11,13 +11,9 @@ import { Dashboard } from './pages/dashboard/Dashboard';
 import { CalculatePublic } from './pages/calculator_public/CalculatePublic';
 
 export const App = () => {
+
   return (
     <>
-      {/* <div className='wrapper'>
-        <div className='header'>Header</div>
-        <div className='center'>Center</div>
-        <div className='footer'>Footer</div>
-      </div> */}
       <Router>
         <Routes>
           <Route path="/" element={<Landing/>} />

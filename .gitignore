@@ -2,3 +2,6 @@
 /.vscode
 /dist
 /.vite
+.env
+.env.local
+.env.production

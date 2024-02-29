@@ -1,14 +1,10 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "./CalculationSession.css";
 import { useNavigate } from "react-router-dom";
 
 export const CalculationSession = () => {
   const [sessionList, _setSessionList] = useState<Array<any>>([]);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    // do the API Call.
-  }, []);
 
   const addSession = () => {
     navigate("/dashboard/add-session");

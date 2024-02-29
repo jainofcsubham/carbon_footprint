@@ -7,6 +7,8 @@ import { CalculationSession } from "../calculation_session/CalculationSession";
 import { Groups } from "../groups/Groups";
 
 export const Dashboard = () => {
+
+
   return (
     <>
       <div className="page_wrapper">

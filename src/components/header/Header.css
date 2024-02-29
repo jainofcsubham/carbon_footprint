@@ -8,7 +8,7 @@
 
 .header_wrapper{
     display: flex;
-    padding: 16px;
+    padding: 16px 40px;
     justify-content: space-between;
     width: 100%;
     max-width: 1600px;

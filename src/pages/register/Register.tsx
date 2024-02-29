@@ -71,7 +71,7 @@ export const Register = () => {
         date_of_birth : moment(data.date_of_birth).format("YYYY-MM-DD")
       },
     });
-    if (res.data && res.data.status == 200) {
+    if (res.res && res.res.status == 200) {
       nav("/login");
     } else {
       alert("Something went wrong!! Please try again.");
